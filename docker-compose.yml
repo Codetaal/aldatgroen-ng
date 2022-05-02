@@ -1,0 +1,14 @@
+version: "3.3"
+services:
+  angular-service:
+    container_name: angular-container
+    build: .
+    ports:
+      - "4200:80"
+# version: "3.3"
+# services:
+#   aldatgroen-angular-service:
+#     container_name: aldatgroen-angular-container
+#     build: ./aldatgroen
+#     ports:
+#       - "4200:80"
