@@ -1,6 +1,5 @@
 import { Router } from '@angular/router';
-import { EventService } from './../event.service';
-import { Event } from '../event';
+import { EventService } from '../../services/event.service';
 import { Component, OnInit } from '@angular/core';
 
 @Component({
@@ -9,7 +8,7 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./event-list.component.scss'],
 })
 export class EventListComponent implements OnInit {
-  events!: Event[];
+  events!: any;
 
   constructor(private eventService: EventService, private router: Router) {}
 
@@ -17,5 +16,9 @@ export class EventListComponent implements OnInit {
     this.eventService.getEvents().subscribe((data) => {
       this.events = data;
     });
+  }
+
+  routeEventDetails(id: number) {
+    this.router.navigate(['events', id]);
   }
 }

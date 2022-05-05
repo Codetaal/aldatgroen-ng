@@ -5,9 +5,10 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 
 import { HttpClientModule } from '@angular/common/http';
-import { PlantListComponent } from './plant-list/plant-list.component';
-import { PlantDetailsComponent } from './plant-details/plant-details.component';
-import { EventListComponent } from './event-list/event-list.component';
+import { PlantListComponent } from './pages/plant/plant-list/plant-list.component';
+import { PlantDetailsComponent } from './pages/plant/plant-details/plant-details.component';
+import { EventListComponent } from './pages/event-list/event-list.component';
+import { CardComponent } from './components/card/card.component';
 
 @NgModule({
   declarations: [
@@ -15,6 +16,7 @@ import { EventListComponent } from './event-list/event-list.component';
     PlantListComponent,
     PlantDetailsComponent,
     EventListComponent,
+    CardComponent,
   ],
   imports: [BrowserModule, AppRoutingModule, HttpClientModule],
   providers: [],

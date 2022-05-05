@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { Plant } from '../plant';
-import { PlantService } from '../plant.service';
+import { PlantService } from '../../../services/plant.service';
 
 @Component({
   selector: 'app-plant-list',
@@ -9,7 +8,7 @@ import { PlantService } from '../plant.service';
   styleUrls: ['./plant-list.component.scss'],
 })
 export class PlantListComponent implements OnInit {
-  plants!: Plant[];
+  plants!: any;
 
   constructor(private plantService: PlantService, private router: Router) {}
 
@@ -20,7 +19,6 @@ export class PlantListComponent implements OnInit {
   }
 
   routePlantDetails(id: number) {
-    this.router.navigate(['plant', id]);
-    console.log(id);
+    this.router.navigate(['plants', id]);
   }
 }

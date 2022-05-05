@@ -1,0 +1,18 @@
+<!-- <card name="test">hoi</card> -->
+
+<table>
+  <tr>
+    <th>id</th>
+    <th>plantId</th>
+    <th>title</th>
+    <th></th>
+  </tr>
+  <tr *ngFor="let event of events">
+    <td>{{ event?.id }}</td>
+    <td>{{ event?.plantId }}</td>
+    <td>{{ event?.title }}</td>
+    <td>
+      <button (click)="routeEventDetails(event.id)">Edit</button>
+    </td>
+  </tr>
+</table>
