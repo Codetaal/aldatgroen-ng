@@ -2,13 +2,14 @@ import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { PlantListComponent } from './pages/plant/plant-list/plant-list.component';
 import { PlantDetailsComponent } from './pages/plant/plant-details/plant-details.component';
-import { EventListComponent } from './pages/event-list/event-list.component';
+import { EventListComponent } from './pages/event/event-list/event-list.component';
+import { EventDetailsComponent } from './pages/event/event-details/event-details.component';
 
 const routes: Routes = [
   { path: 'plants', component: PlantListComponent },
   { path: 'plants/:id', component: PlantDetailsComponent },
   { path: 'events', component: EventListComponent },
-  // { path: 'events/:id', component: EventDetailsComponent },
+  { path: 'events/:id', component: EventDetailsComponent },
 ];
 
 @NgModule({

@@ -7,7 +7,7 @@ import { AppComponent } from './app.component';
 import { HttpClientModule } from '@angular/common/http';
 import { PlantListComponent } from './pages/plant/plant-list/plant-list.component';
 import { PlantDetailsComponent } from './pages/plant/plant-details/plant-details.component';
-import { EventListComponent } from './pages/event-list/event-list.component';
+import { EventListComponent } from './pages/event/event-list/event-list.component';
 import { CardComponent } from './components/card/card.component';
 
 @NgModule({
