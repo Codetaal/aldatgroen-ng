@@ -19,8 +19,9 @@ export class PlantDetailsComponent implements OnInit {
   ngOnInit(): void {
     this.id = this.route.snapshot.params['id'];
 
-    this.plantService.getPlant(this.id).subscribe((data) => {
-      this.plant = data;
+    this.plantService.getPlant(this.id).then((res: any) => {
+      this.plant = res;
+      console.log(this.plant);
     });
   }
 }

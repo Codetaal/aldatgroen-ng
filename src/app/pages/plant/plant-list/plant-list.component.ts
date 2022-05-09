@@ -1,3 +1,4 @@
+import { Plant } from './../../../interfaces/plant';
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { PlantService } from '../../../services/plant.service';
@@ -13,8 +14,9 @@ export class PlantListComponent implements OnInit {
   constructor(private plantService: PlantService, private router: Router) {}
 
   ngOnInit(): void {
-    this.plantService.getPlants().subscribe((data) => {
-      this.plants = data;
+    this.plantService.getPlants().then((res: any) => {
+      this.plants = res.data;
+      console.log(this.plants);
     });
   }
 

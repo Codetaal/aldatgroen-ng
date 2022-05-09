@@ -1,3 +1,4 @@
+import { environment } from 'src/environments/environment';
 import { Router } from '@angular/router';
 import { EventService } from '../../../services/event.service';
 import { Component, OnInit } from '@angular/core';
@@ -11,30 +12,37 @@ import { Event } from 'src/app/interfaces/event';
 export class EventListComponent implements OnInit {
   events!: Event[];
   amount!: string;
+  // recurring: number = 1;
 
   constructor(private eventService: EventService, private router: Router) {}
 
   ngOnInit(): void {
     this.eventService.getEvents().subscribe((data: Event[]) => {
       this.events = data;
-      this.extendEvents(this.events);
+      this.addRecurringEvents(this.events);
+      this.sortEventsByStartDate(this.events);
     });
   }
 
-  extendEvents(events: Event[]) {
-    let repeatedEvents = [] as Event[];
-
+  addRecurringEvents(events: Event[]) {
     events.forEach((event) => {
-      let eventData = {} as Event;
-      eventData = event;
+      for (let n = 1; n <= environment.recurringAmount; n++) {
+        let eventData = { ...event };
+        let startDate = new Date(eventData.startDate);
+        startDate.setDate(startDate.getDate() + parseInt(eventData.repeat) * n);
 
-      // let yourDate = new Date(eventData.startDate);
-      // eventData.startDate = yourDate.setDate(yourDate.getDate() + 1).toString();
+        eventData.startDate = startDate.toISOString();
 
-      repeatedEvents.push(eventData);
+        events.push(eventData);
+      }
     });
+  }
 
-    console.log(repeatedEvents);
+  sortEventsByStartDate(events: Event[]) {
+    events.sort(
+      (a, b) =>
+        new Date(a.startDate).getTime() - new Date(b.startDate).getTime()
+    );
   }
 
   routeEventDetails(id: number) {

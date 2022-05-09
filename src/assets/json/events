@@ -4,32 +4,32 @@
     "plantId": "2",
     "title": "Lorem ipsum",
     "description": "Ipsum Lorem dorem",
-    "startDate": "2022-10-02 10:00:00",
+    "startDate": "2022-05-21T18:25:43.000Z",
     "repeat": "3",
-    "reminderDate": "2022-10-01 10:00:00",
-    "createdAt": "2022-05-03 10:00:00",
-    "updatedAt": "2022-05-17 16:00:00"
+    "reminderDate": "2022-05-23T18:25:43.000Z",
+    "createdAt": "2022-05-23T18:25:43.000Z",
+    "updatedAt": "2022-05-25T18:25:43.000Z"
   },
   {
     "id": "2",
     "plantId": "2",
     "title": "Lorem ipsum",
     "description": "Ipsum Lorem dorem",
-    "startDate": "2022-10-01 10:00:00",
+    "startDate": "2022-06-02T18:25:43.000Z",
     "repeat": "1",
-    "reminderDate": "2022-10-01 10:00:00",
-    "createdAt": "2022-05-06 10:00:00",
-    "updatedAt": "2022-05-17 16:00:00"
+    "reminderDate": "2022-05-23T18:25:43.000Z",
+    "createdAt": "2022-05-28T18:25:43.000Z",
+    "updatedAt": "2022-05-22T18:25:43.000Z"
   },
   {
     "id": "3",
     "plantId": "1",
     "title": "Lorem ipsum",
     "description": "Ipsum Lorem dorem",
-    "startDate": "2022-10-06 10:00:00",
+    "startDate": "2022-05-21T18:25:43.000Z",
     "repeat": "7",
-    "reminderDate": "2022-10-01 10:00:00",
-    "createdAt": "2022-04-01 10:00:00",
-    "updatedAt": "2022-05-17 16:00:00"
+    "reminderDate": "2022-05-23T18:25:43.000Z",
+    "createdAt": "2022-05-21T18:25:43.000Z",
+    "updatedAt": "2022-05-23T18:25:43.000Z"
   }
 ]

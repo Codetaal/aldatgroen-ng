@@ -2,6 +2,8 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { environment } from 'src/environments/environment';
+import { faunaDbClient, faunaQuery } from './../globals';
+import { Plant } from 'src/app/interfaces/plant';
 
 @Injectable({
   providedIn: 'root',
@@ -9,16 +11,24 @@ import { environment } from 'src/environments/environment';
 export class PlantService {
   constructor(private httpClient: HttpClient) {}
 
-  public getPlants(): Observable<any> {
-    const endpoint: string = 'plants';
-
-    return this.httpClient.get(`${environment.apiEndpoint}${endpoint}`);
+  public getPlants(): Promise<void> {
+    return faunaDbClient
+      .query(
+        faunaQuery.Map(
+          faunaQuery.Paginate(faunaQuery.Match(faunaQuery.Index('all_plants'))),
+          faunaQuery.Lambda((x) => faunaQuery.Get(x))
+        )
+      )
+      .then((res: any) => res)
+      .catch((err) => console.error(err));
   }
 
-  public getPlant(id: number): Observable<Object> {
-    const endpoint: string = 'plant';
-
-    // return this.httpClient.get(`${environment.apiEndpoint}${endpoint}/${id}`);
-    return this.httpClient.get(`${environment.apiEndpoint}${endpoint}`);
+  public getPlant(id: number): Promise<void> {
+    return faunaDbClient
+      .query(
+        faunaQuery.Get(faunaQuery.Ref(faunaQuery.Collection('plants'), id))
+      )
+      .then((res: any) => res)
+      .catch((err) => console.error(err));
   }
 }
