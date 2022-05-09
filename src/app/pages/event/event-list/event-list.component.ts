@@ -22,12 +22,19 @@ export class EventListComponent implements OnInit {
   }
 
   extendEvents(events: Event[]) {
+    let repeatedEvents = [] as Event[];
+
     events.forEach((event) => {
       let eventData = {} as Event;
-      eventData.id = 3;
-      eventData.title = 'something';
-      this.events.push(eventData);
+      eventData = event;
+
+      // let yourDate = new Date(eventData.startDate);
+      // eventData.startDate = yourDate.setDate(yourDate.getDate() + 1).toString();
+
+      repeatedEvents.push(eventData);
     });
+
+    console.log(repeatedEvents);
   }
 
   routeEventDetails(id: number) {
