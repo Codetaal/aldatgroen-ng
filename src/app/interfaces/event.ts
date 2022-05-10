@@ -1,11 +1,11 @@
 export interface Event {
   id: number;
-  plantId: number;
+  plant_id: number;
   title: string;
   description: string;
-  startDate: string;
+  start_date: string;
   repeat: string;
-  reminderDate: string;
+  reminder_date: string;
   createdAt: string;
   updatesAt: string;
 }

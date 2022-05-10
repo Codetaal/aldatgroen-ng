@@ -1,6 +1,8 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { Observable } from 'rxjs';
 import { faunaDbClient, faunaQuery } from './../globals';
+import { Event } from '../interfaces/event';
 
 @Injectable({
   providedIn: 'root',
@@ -8,22 +10,15 @@ import { faunaDbClient, faunaQuery } from './../globals';
 export class EventService {
   constructor(private httpClient: HttpClient) {}
 
-  public getEvents(): Promise<void> {
-    return faunaDbClient
-      .query(
-        faunaQuery.Map(
-          faunaQuery.Paginate(faunaQuery.Match(faunaQuery.Index('all_tasks'))),
-          faunaQuery.Lambda((x) => faunaQuery.Get(x))
-        )
-      )
-      .then((res: any) => res)
-      .catch((err) => console.error(err));
+  public getEvent(id: number): Observable<Event> {
+    return this.httpClient.get<Event>(
+      `https://xzf89rcs.directus.app/items/events/${id}`
+    );
   }
 
-  public getEvent(id: number): Promise<void> {
-    return faunaDbClient
-      .query(faunaQuery.Get(faunaQuery.Ref(faunaQuery.Collection('tasks'), id)))
-      .then((res: any) => res)
-      .catch((err) => console.error(err));
+  public getEvents(): Observable<Event[]> {
+    return this.httpClient.get<Event[]>(
+      `https://xzf89rcs.directus.app/items/events`
+    );
   }
 }

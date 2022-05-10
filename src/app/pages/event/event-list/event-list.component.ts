@@ -11,19 +11,14 @@ import { Event } from 'src/app/interfaces/event';
 })
 export class EventListComponent implements OnInit {
   events!: Event[];
-  // amount!: string;
+
+  // @Input() public myInputType: string;
 
   constructor(private eventService: EventService, private router: Router) {}
 
   ngOnInit(): void {
-    this.eventService.getEvents().then((res: any) => {
-      this.events = res.data.map((resItem: any) => {
-        const item: Event = resItem.data;
-        item.id = resItem.ref.id;
-        item.plantId = resItem.data.plantId.id;
-        return item;
-      });
-
+    this.eventService.getEvents().subscribe((response: any) => {
+      this.events = response.data;
       this.addRecurringEvents(this.events);
       this.sortEventsByStartDate(this.events);
     });
@@ -33,10 +28,10 @@ export class EventListComponent implements OnInit {
     events.forEach((event) => {
       for (let n = 1; n <= environment.recurringAmount; n++) {
         let eventData = { ...event };
-        let startDate = new Date(eventData.startDate);
+        let startDate = new Date(eventData.start_date);
         startDate.setDate(startDate.getDate() + parseInt(eventData.repeat) * n);
 
-        eventData.startDate = startDate.toISOString();
+        eventData.start_date = startDate.toISOString();
 
         events.push(eventData);
       }
@@ -46,7 +41,7 @@ export class EventListComponent implements OnInit {
   sortEventsByStartDate(events: Event[]) {
     events.sort(
       (a, b) =>
-        new Date(a.startDate).getTime() - new Date(b.startDate).getTime()
+        new Date(a.start_date).getTime() - new Date(b.start_date).getTime()
     );
   }
 
