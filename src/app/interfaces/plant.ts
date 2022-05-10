@@ -1,6 +1,3 @@
-// export interface CustomResponse {
-//   data: any;
-// }
 export interface Plant {
   id: number;
   name: string;

@@ -1,25 +1,29 @@
 <!-- <card name="test">hoi</card> -->
 
-<table style="width: 100%">
-  <tr *ngFor="let event of events">
-    <td>{{ event.id }}</td>
-    <td>{{ event.plantId }}</td>
-    <td>{{ event.title }}</td>
-    <!-- <td>{{ event.repeat }}</td> -->
-    <td>{{ event.startDate | date: "short" }}</td>
-    <td>{{ event.reminderDate | date: "short" }}</td>
-    <td>
-      <input type="number" [value]="1" #POSTPONE_AMOUNT />
-      <button (click)="postpone(event.id, POSTPONE_AMOUNT.value)">
-        Postpone
-      </button>
-    </td>
-    <td>
-      <input type="number" [value]="event.repeat" #REPEAT_AMOUNT />
-      <button (click)="repeat(event.id, REPEAT_AMOUNT.value)">Repeat</button>
-    </td>
-    <!-- <td>
+<div *ngIf="events">
+  <table style="width: 100%">
+    <tr *ngFor="let event of events">
+      <td>{{ event.id }}</td>
+      <td>{{ event.plantId }}</td>
+      <td>{{ event.title }}</td>
+      <!-- <td>{{ event.repeat }}</td> -->
+      <td>{{ event.startDate | date: "short" }}</td>
+      <td>{{ event.reminderDate | date: "short" }}</td>
+      <td>
+        <input type="number" [value]="1" #POSTPONE_AMOUNT />
+        <button (click)="postpone(event.id, POSTPONE_AMOUNT.value)">
+          Postpone
+        </button>
+      </td>
+      <td>
+        <input type="number" [value]="event.repeat" #REPEAT_AMOUNT />
+        <button (click)="repeat(event.id, REPEAT_AMOUNT.value)">
+          RepeatAfter
+        </button>
+      </td>
+      <!-- <td>
       <button (click)="routeEventDetails(event.id)">Edit</button>
     </td> -->
-  </tr>
-</table>
+    </tr>
+  </table>
+</div>

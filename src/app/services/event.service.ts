@@ -1,8 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs';
-import { environment } from 'src/environments/environment';
-import { Event } from 'src/app/interfaces/event';
+import { faunaDbClient, faunaQuery } from './../globals';
 
 @Injectable({
   providedIn: 'root',
@@ -10,18 +8,22 @@ import { Event } from 'src/app/interfaces/event';
 export class EventService {
   constructor(private httpClient: HttpClient) {}
 
-  public getEvents(): Observable<Event[]> {
-    const endpoint: string = 'events';
-
-    return this.httpClient.get<Event[]>(
-      `${environment.apiEndpoint}${endpoint}`
-    );
+  public getEvents(): Promise<void> {
+    return faunaDbClient
+      .query(
+        faunaQuery.Map(
+          faunaQuery.Paginate(faunaQuery.Match(faunaQuery.Index('all_tasks'))),
+          faunaQuery.Lambda((x) => faunaQuery.Get(x))
+        )
+      )
+      .then((res: any) => res)
+      .catch((err) => console.error(err));
   }
 
-  public getEvent(id: number): Observable<Event> {
-    const endpoint: string = 'event';
-
-    // return this.httpClient.get(`${environment.apiEndpoint}${endpoint}/${id}`);
-    return this.httpClient.get<Event>(`${environment.apiEndpoint}${endpoint}`);
+  public getEvent(id: number): Promise<void> {
+    return faunaDbClient
+      .query(faunaQuery.Get(faunaQuery.Ref(faunaQuery.Collection('tasks'), id)))
+      .then((res: any) => res)
+      .catch((err) => console.error(err));
   }
 }

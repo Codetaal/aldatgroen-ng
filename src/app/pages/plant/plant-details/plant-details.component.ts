@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { PlantService } from '../../../services/plant.service';
 import { ActivatedRoute } from '@angular/router';
+import { Plant } from 'src/app/interfaces/plant';
 
 @Component({
   selector: 'app-plant-details',
@@ -8,8 +9,8 @@ import { ActivatedRoute } from '@angular/router';
   styleUrls: ['./plant-details.component.scss'],
 })
 export class PlantDetailsComponent implements OnInit {
-  id!: any;
-  plant!: any;
+  id!: number;
+  plant!: Plant;
 
   constructor(
     private plantService: PlantService,
@@ -20,8 +21,8 @@ export class PlantDetailsComponent implements OnInit {
     this.id = this.route.snapshot.params['id'];
 
     this.plantService.getPlant(this.id).then((res: any) => {
-      this.plant = res;
-      console.log(this.plant);
+      this.plant = res.data;
+      this.plant.id = res.ref.id;
     });
   }
 }

@@ -1,18 +1,21 @@
 <!-- <card name="test">hoi</card> -->
 
-<table>
-  <tr>
-    <th>name</th>
-    <th>secondary_name</th>
-    <th></th>
-  </tr>
-  <tr *ngFor="let plant of plants">
-    <td>{{ plant?.data.name }}</td>
-    <td>{{ plant?.data.secondary_name }}</td>
-    <td>
-      <button (click)="routePlantDetails(plant?.ref.value.id)">
-        Edit #{{ plant?.ref.value.id }}
-      </button>
-    </td>
-  </tr>
-</table>
+<div *ngIf="plants">
+  <table>
+    <tr>
+      <th>name</th>
+      <th>secondary_name</th>
+      <th></th>
+    </tr>
+    <!--  TODO: use interfaces to have auto fill and such -->
+    <tr *ngFor="let plant of plants">
+      <td>{{ plant.name }}</td>
+      <td>{{ plant.secondary_name }}</td>
+      <td>
+        <button (click)="routePlantDetails(plant.id)">
+          Edit #{{ plant.id }}
+        </button>
+      </td>
+    </tr>
+  </table>
+</div>

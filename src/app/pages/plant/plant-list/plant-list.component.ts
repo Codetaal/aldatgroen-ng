@@ -1,4 +1,4 @@
-import { Plant } from './../../../interfaces/plant';
+import { Plant } from 'src/app/interfaces/plant';
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { PlantService } from '../../../services/plant.service';
@@ -9,14 +9,17 @@ import { PlantService } from '../../../services/plant.service';
   styleUrls: ['./plant-list.component.scss'],
 })
 export class PlantListComponent implements OnInit {
-  plants!: any;
+  plants!: Plant[];
 
   constructor(private plantService: PlantService, private router: Router) {}
 
   ngOnInit(): void {
     this.plantService.getPlants().then((res: any) => {
-      this.plants = res.data;
-      console.log(this.plants);
+      this.plants = res.data.map((resItem: any) => {
+        const item: Plant = resItem.data;
+        item.id = resItem.ref.id;
+        return item;
+      });
     });
   }
 

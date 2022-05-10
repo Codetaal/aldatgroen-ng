@@ -11,14 +11,19 @@ import { Event } from 'src/app/interfaces/event';
 })
 export class EventListComponent implements OnInit {
   events!: Event[];
-  amount!: string;
-  // recurring: number = 1;
+  // amount!: string;
 
   constructor(private eventService: EventService, private router: Router) {}
 
   ngOnInit(): void {
-    this.eventService.getEvents().subscribe((data: Event[]) => {
-      this.events = data;
+    this.eventService.getEvents().then((res: any) => {
+      this.events = res.data.map((resItem: any) => {
+        const item: Event = resItem.data;
+        item.id = resItem.ref.id;
+        item.plantId = resItem.data.plantId.id;
+        return item;
+      });
+
       this.addRecurringEvents(this.events);
       this.sortEventsByStartDate(this.events);
     });
@@ -51,6 +56,7 @@ export class EventListComponent implements OnInit {
 
   postpone(id: number, amount: string) {
     console.log(id, amount);
+    // make post service
     // reload event data
   }
 
