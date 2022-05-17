@@ -3,6 +3,7 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { Event, EventPost } from '../interfaces/event';
 import { shareReplay } from 'rxjs/operators';
+import { Plant } from '../interfaces/plant';
 
 @Injectable({
   providedIn: 'root',
@@ -12,15 +13,15 @@ export class PlantService {
 
   constructor(private httpClient: HttpClient) {}
 
-  public getPlant(id: number): Observable<Event> {
+  public getPlant(id: number): Observable<Plant> {
     return this.httpClient
-      .get<Event>(`${this.baseUrl}/${id}?fields=*.*`)
+      .get<Plant>(`${this.baseUrl}/${id}?fields=*.*`)
       .pipe(shareReplay());
   }
 
-  public getPlants(): Observable<Event[]> {
+  public getPlants(): Observable<Plant[]> {
     return this.httpClient
-      .get<Event[]>(`${this.baseUrl}?fields=*.*`)
+      .get<Plant[]>(`${this.baseUrl}?fields=*.*`)
       .pipe(shareReplay());
   }
 }

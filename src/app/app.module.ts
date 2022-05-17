@@ -11,9 +11,10 @@ import { PlantDetailsComponent } from './pages/plant/plant-details/plant-details
 import { EventListComponent } from './pages/event/event-list/event-list.component';
 import { EventDetailsComponent } from './pages/event/event-details/event-details.component';
 import { CardComponent } from './components/card/card.component';
-
 import { LoaderInterceptor } from './interceptors/loading.interceptor';
 import { LoaderComponent } from './components/loader/loader.component';
+import { MessageListComponent } from './pages/message/message-list/message-list.component';
+import { MessageDetailsComponent } from './pages/message/message-details/message-details.component';
 
 @NgModule({
   declarations: [
@@ -24,6 +25,8 @@ import { LoaderComponent } from './components/loader/loader.component';
     EventDetailsComponent,
     CardComponent,
     LoaderComponent,
+    MessageListComponent,
+    MessageDetailsComponent,
   ],
   imports: [
     BrowserModule,
