@@ -14,12 +14,8 @@ export class PlantListComponent implements OnInit {
   constructor(private plantService: PlantService, private router: Router) {}
 
   ngOnInit(): void {
-    this.plantService.getPlants().then((res: any) => {
-      this.plants = res.data.map((resItem: any) => {
-        const item: Plant = resItem.data;
-        item.id = resItem.ref.id;
-        return item;
-      });
+    this.plantService.getPlants().subscribe((response: any) => {
+      this.plants = response.data;
     });
   }
 

@@ -1,3 +1,21 @@
 <div *ngIf="event">
-  <p>{{ event.title }}</p>
+  <table style="width: 100%">
+    <tr style="text-align: left">
+      <th>id</th>
+      <th>plant_id</th>
+      <th>title</th>
+      <th>start_date</th>
+      <th>#</th>
+    </tr>
+    <tr>
+      <td>{{ event.id }}</td>
+      <td>{{ event.plant_id }}</td>
+      <td>{{ event.title }}</td>
+      <td>{{ event.start_date | date: "long" }}</td>
+      <td>
+        <input type="number" [value]="1" [(ngModel)]="postponeAmount" />
+        <button (click)="postpone(event)">Postpone</button>
+      </td>
+    </tr>
+  </table>
 </div>

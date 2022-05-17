@@ -1,21 +1,72 @@
 <!-- <card name="test">hoi</card> -->
 
+<!-- This example requires Tailwind CSS v2.0+ -->
 <div *ngIf="plants">
-  <table>
-    <tr>
-      <th>name</th>
-      <th>secondary_name</th>
-      <th></th>
-    </tr>
-    <!--  TODO: use interfaces to have auto fill and such -->
-    <tr *ngFor="let plant of plants">
-      <td>{{ plant.name }}</td>
-      <td>{{ plant.secondary_name }}</td>
-      <td>
-        <button (click)="routePlantDetails(plant.id)">
-          Edit #{{ plant.id }}
-        </button>
-      </td>
-    </tr>
-  </table>
+  <div class="flow-root mt-6">
+    <ul role="list" class="-my-5 divide-y divide-gray-200">
+      <li *ngFor="let plant of plants">
+        <div (click)="routePlantDetails(plant.id)" class="block py-4">
+          <div class="flex items-center space-x-4">
+            <div class="flex-shrink-0">
+              <span class="relative inline-block">
+                <img
+                  class="w-8 h-8 rounded-full"
+                  src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80"
+                  alt=""
+                />
+                <span
+                  class="absolute -bottom-1 -right-1 w-4 h-4 rounded-full inline-flex items-center text-white justify-center bg-emerald-500 ring-2 ring-white text-[10px]"
+                  >12</span
+                >
+              </span>
+            </div>
+            <div class="flex-1 min-w-0">
+              <p class="text-sm font-semibold text-gray-900 truncate">
+                {{ plant.secondary_name || plant.name }}
+              </p>
+              <p class="text-sm truncate text-emerald-500">
+                Can I get some water, please? lorem ipsum dorem jore
+              </p>
+            </div>
+            <div class="flex-shrink-0">
+              <time
+                datetime="2021-01-27T16:35"
+                class="text-sm text-gray-500 whitespace-nowrap"
+                >1h ago</time
+              >
+            </div>
+          </div>
+        </div>
+      </li>
+
+      <!-- <li>
+        <a href="" class="block py-4">
+          <div class="flex items-center space-x-4">
+            <div class="flex-shrink-0">
+              <span class="relative inline-block">
+                <img
+                  class="w-8 h-8 rounded-full"
+                  src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80"
+                  alt=""
+                />
+              </span>
+            </div>
+            <div class="flex-1 min-w-0">
+              <p class="text-sm font-semibold text-gray-900 truncate">
+                Leonard Krasner
+              </p>
+              <p class="text-sm text-gray-500 truncate">
+                Can I get some water, please?
+              </p>
+            </div>
+            <time
+              datetime="2021-01-27T16:35"
+              class="flex-shrink-0 text-sm text-gray-500 whitespace-nowrap"
+              >2w ago</time
+            >
+          </div>
+        </a>
+      </li> -->
+    </ul>
+  </div>
 </div>

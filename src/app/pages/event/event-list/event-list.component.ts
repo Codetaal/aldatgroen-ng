@@ -3,6 +3,8 @@ import { Router } from '@angular/router';
 import { EventService } from '../../../services/event.service';
 import { Component, OnInit } from '@angular/core';
 import { Event } from 'src/app/interfaces/event';
+import { FormBuilder, FormGroup } from '@angular/forms';
+import * as dayjs from 'dayjs';
 
 @Component({
   selector: 'app-event-list',
@@ -10,53 +12,98 @@ import { Event } from 'src/app/interfaces/event';
   styleUrls: ['./event-list.component.scss'],
 })
 export class EventListComponent implements OnInit {
-  events!: Event[];
+  events: Event[] = [];
+  baseEvents: Event[] = [];
+  reminders = [];
+  form: FormGroup;
 
-  // @Input() public myInputType: string;
-
-  constructor(private eventService: EventService, private router: Router) {}
-
-  ngOnInit(): void {
-    this.eventService.getEvents().subscribe((response: any) => {
-      this.events = response.data;
-      this.addRecurringEvents(this.events);
-      this.sortEventsByStartDate(this.events);
+  constructor(
+    private eventService: EventService,
+    private router: Router,
+    public formBuilder: FormBuilder
+  ) {
+    this.form = this.formBuilder.group({
+      title: [''],
+      description: [''],
+      start_date: [''],
+      repeat: [''],
+      reminder: [''],
     });
   }
 
-  addRecurringEvents(events: Event[]) {
-    events.forEach((event) => {
-      for (let n = 1; n <= environment.recurringAmount; n++) {
-        let eventData = { ...event };
-        let startDate = new Date(eventData.start_date);
-        startDate.setDate(startDate.getDate() + parseInt(eventData.repeat) * n);
+  ngOnInit(): void {
+    this.eventService.getEvents().subscribe((response: any) => {
+      this.baseEvents = response.data;
 
-        eventData.start_date = startDate.toISOString();
+      this.createRecurringEvents();
+      this.sortEventsByStartDate();
+      this.loadReminders();
+    });
+  }
 
-        events.push(eventData);
+  createRecurringEvents(): void {
+    this.events = [];
+
+    this.baseEvents.forEach((event, index) => {
+      for (let n = 0; n < environment.recurringAmount; n++) {
+        const newEvent = { ...event };
+        const startDate = new Date(newEvent.start_date);
+        startDate.setDate(startDate.getDate() + parseInt(newEvent.repeat) * n);
+
+        newEvent.start_date = startDate.toISOString();
+        newEvent.cloneRefIndex = index;
+
+        this.events.push(newEvent);
       }
     });
   }
 
-  sortEventsByStartDate(events: Event[]) {
-    events.sort(
+  mutateBaseEvent(event: Event, data: any): void {
+    this.baseEvents[event.cloneRefIndex] = data;
+  }
+
+  sortEventsByStartDate() {
+    this.events.sort(
       (a, b) =>
         new Date(a.start_date).getTime() - new Date(b.start_date).getTime()
     );
   }
 
-  routeEventDetails(id: number) {
-    this.router.navigate(['events', id]);
+  update(event: Event) {
+    //TODO: only do if object has changes
+    this.eventService.updateEvent(event).subscribe((response: any) => {
+      this.mutateBaseEvent(event, response.data);
+      this.createRecurringEvents();
+      this.sortEventsByStartDate();
+    });
   }
 
-  postpone(id: number, amount: string) {
-    console.log(id, amount);
+  submitForm() {
+    this.eventService
+      .createEvent(this.form.value)
+      .subscribe((response: any) => {
+        console.log(response);
+      });
+  }
+
+  postpone(event: Event) {
     // make post service
     // reload event data
   }
 
-  repeat(id: number, amount: string) {
-    console.log(id, amount);
-    // reload event data
+  loadReminders(): void {
+    this.events.forEach((event) => {
+      const reminderDate = dayjs(event.start_date).subtract(
+        parseInt(event.reminder),
+        'day'
+      );
+      if (dayjs(reminderDate).isBefore(dayjs())) {
+        console.log(event);
+      }
+    });
+  }
+
+  routeEventDetails(event: Event) {
+    this.router.navigate(['events', event.id]);
   }
 }

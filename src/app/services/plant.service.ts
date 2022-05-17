@@ -1,31 +1,26 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { faunaDbClient, faunaQuery } from './../globals';
+import { Observable } from 'rxjs';
+import { Event, EventPost } from '../interfaces/event';
+import { shareReplay } from 'rxjs/operators';
 
 @Injectable({
   providedIn: 'root',
 })
 export class PlantService {
+  baseUrl: string = 'https://xzf89rcs.directus.app/items/plants';
+
   constructor(private httpClient: HttpClient) {}
 
-  public getPlants(): Promise<void> {
-    return faunaDbClient
-      .query(
-        faunaQuery.Map(
-          faunaQuery.Paginate(faunaQuery.Match(faunaQuery.Index('all_plants'))),
-          faunaQuery.Lambda((x) => faunaQuery.Get(x))
-        )
-      )
-      .then((res: any) => res)
-      .catch((err) => console.error(err));
+  public getPlant(id: number): Observable<Event> {
+    return this.httpClient
+      .get<Event>(`${this.baseUrl}/${id}?fields=*.*`)
+      .pipe(shareReplay());
   }
 
-  public getPlant(id: number): Promise<void> {
-    return faunaDbClient
-      .query(
-        faunaQuery.Get(faunaQuery.Ref(faunaQuery.Collection('plants'), id))
-      )
-      .then((res: any) => res)
-      .catch((err) => console.error(err));
+  public getPlants(): Observable<Event[]> {
+    return this.httpClient
+      .get<Event[]>(`${this.baseUrl}?fields=*.*`)
+      .pipe(shareReplay());
   }
 }
