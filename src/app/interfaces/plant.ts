@@ -5,7 +5,11 @@ export interface PlantResponse {
   id: number;
   name: string;
   secondary_name: string;
+  photo: {
+    id: string;
+  };
   description: string;
+  date_created: string;
   events: Event[];
   messages: MessageResponse[];
 }
@@ -19,8 +23,14 @@ export interface PlantsResponseInterface {
 }
 
 export interface PlantTransformInterface {
+  id: number;
   name: string;
   secondary_name: string;
+  photo: {
+    small: string;
+    medium: string;
+  };
+  date_created: string;
   sort: string;
 
   messages: MessageTransform[];

@@ -1,94 +1,137 @@
 <!-- <card name="test">hoi</card> -->
 
-<!-- This example requires Tailwind CSS v2.0+ -->
-<div *ngIf="plants">
-  <div class="flex flex-row h-screen antialiased text-gray-800">
-    <div class="flex flex-col w-full h-full py-4 pl-4 pr-4 -mr-4">
-      <div class="flex flex-row items-center">
-        <div class="flex flex-row items-center">
-          <div class="text-xl font-semibold">Messages</div>
+<div class="flex flex-col h-screen bg-gradient-to-r from-rose-500 to-rose-400">
+  <div class="pb-0 pt-14">
+    <div
+      class="w-2/3 px-8 text-2xl font-bold leading-8 tracking-wide text-white"
+    >
+      Chat with your friends
+    </div>
+    <div class="flex pt-5 pl-8 overflow-hidden overflow-x-auto pb-7">
+      <div
+        class="flex items-center justify-center flex-shrink-0 mr-4 text-sm font-semibold border-2 border-dashed rounded-full text-rose-100 border-rose-300 w-11 h-11"
+      >
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          class="w-6 h-6"
+          fill="none"
+          viewBox="0 0 24 24"
+          stroke="currentColor"
+          stroke-width="2"
+        >
+          <path
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            d="M12 6v6m0 0v6m0-6h6m-6 0H6"
+          />
+        </svg>
+      </div>
+      <div
+        *ngFor="let plant of plants"
+        class="flex items-center justify-center flex-shrink-0 mr-4"
+      >
+        <div class="w-11 h-11">
+          <img
+            *ngIf="plant.photo.small !== ''"
+            class="object-contain w-full h-full border-8 rounded-full bg-rose-200 border-rose-200"
+            src="{{ plant.photo.small }}"
+            alt="{{ plant.secondary_name || plant.name }}"
+          />
           <div
-            class="flex items-center justify-center w-5 h-5 ml-2 text-xs font-medium text-white bg-red-500 rounded-full"
-          >
-            5
-          </div>
-        </div>
-        <div class="ml-auto">
-          <button
-            class="flex items-center justify-center text-gray-500 bg-gray-200 rounded-full h-7 w-7"
+            *ngIf="plant.photo.small === ''"
+            class="flex items-center justify-center w-full h-full rounded-full bg-rose-200 text-rose-400"
           >
             <svg
-              class="w-4 h-4 stroke-current"
-              fill="none"
-              stroke="currentColor"
-              viewBox="0 0 24 24"
               xmlns="http://www.w3.org/2000/svg"
+              class="w-5 h-5"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+              stroke-width="2"
             >
               <path
                 stroke-linecap="round"
                 stroke-linejoin="round"
-                stroke-width="2"
-                d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"
-              ></path>
+                d="M3 9a2 2 0 012-2h.93a2 2 0 001.664-.89l.812-1.22A2 2 0 0110.07 4h3.86a2 2 0 011.664.89l.812 1.22A2 2 0 0018.07 7H19a2 2 0 012 2v9a2 2 0 01-2 2H5a2 2 0 01-2-2V9z"
+              />
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                d="M15 13a3 3 0 11-6 0 3 3 0 016 0z"
+              />
             </svg>
-          </button>
+          </div>
         </div>
       </div>
-      <div class="mt-5">
-        <div class="text-xs font-semibold text-gray-400 uppercase">Friends</div>
-      </div>
-      <div class="relative h-full pt-2 overflow-hidden">
-        <div class="flex flex-col h-full -mx-4 overflow-y-auto divide-y">
-          <div
-            class="relative flex flex-row items-center p-4"
-            *ngFor="let plant of plants"
-          >
-            <div class="absolute top-0 right-0 mt-3 mr-4 text-xs text-gray-500">
-              2 hours ago
-            </div>
-
+    </div>
+  </div>
+  <div class="bg-white rounded-t-[30px] px-4 py-12 flex-grow">
+    <div class="grid grid-cols-1 gap-2">
+      <!-- row -->
+      <span
+        *ngFor="let plant of plants"
+        (click)="routePlantDetails(plant.id)"
+        class="group flex flex-row items-center px-4 py-3 hover:bg-rose-50 active:bg-rose-50 rounded-[20px]"
+      >
+        <div class="flex items-center justify-center flex-shrink-0">
+          <div class="relative w-14 h-14">
+            <img
+              *ngIf="plant.photo.small !== ''"
+              class="object-contain w-full h-full border-8 rounded-full bg-rose-50 border-rose-50"
+              src="{{ plant.photo.medium }}"
+              alt="{{ plant.secondary_name || plant.name }}"
+            />
             <div
-              class="flex items-center justify-center flex-shrink-0 w-10 h-10 font-bold text-pink-300 bg-pink-500 rounded-full"
+              *ngIf="plant.photo.small === ''"
+              class="flex items-center justify-center w-full h-full rounded-full bg-rose-50 text-rose-300"
             >
-              T
-            </div>
-            <div class="flex flex-col flex-1 min-w-0 ml-3">
-              <div class="text-sm font-medium">
-                {{ plant.secondary_name || plant.name }}
-              </div>
-              <div class="text-xs truncate">
-                {{ plant.latestMessage().content }}
-              </div>
-            </div>
-            <div class="self-end flex-shrink-0 mb-1 ml-2">
-              <span
-                class="flex items-center justify-center w-5 h-5 text-xs text-white bg-red-500 rounded-full"
-                >{{ plant.countMessages() }}</span
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                class="w-6 h-6"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke="currentColor"
+                stroke-width="2"
               >
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  d="M3 9a2 2 0 012-2h.93a2 2 0 001.664-.89l.812-1.22A2 2 0 0110.07 4h3.86a2 2 0 011.664.89l.812 1.22A2 2 0 0018.07 7H19a2 2 0 012 2v9a2 2 0 01-2 2H5a2 2 0 01-2-2V9z"
+                />
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  d="M15 13a3 3 0 11-6 0 3 3 0 016 0z"
+                />
+              </svg>
             </div>
           </div>
         </div>
-        <div class="absolute bottom-0 right-0 mr-2">
-          <button
-            class="flex items-center justify-center w-10 h-10 text-white bg-red-500 rounded-full shadow-sm"
-          >
-            <svg
-              class="w-6 h-6"
-              fill="none"
-              stroke="currentColor"
-              viewBox="0 0 24 24"
-              xmlns="http://www.w3.org/2000/svg"
+        <div class="flex flex-col flex-1 min-w-0 ml-3">
+          <div class="flex items-center justify-between">
+            <div
+              [class.text-rose-600]="plant.countMessages() > 1"
+              class="text-sm font-bold text-gray-800"
             >
-              <path
-                stroke-linecap="round"
-                stroke-linejoin="round"
-                stroke-width="2"
-                d="M12 6v6m0 0v6m0-6h6m-6 0H6"
-              ></path>
-            </svg>
-          </button>
+              {{ plant.secondary_name || plant.name }}
+            </div>
+            <div class="text-[10px] leading-7 text-gray-400">
+              {{ plant.date_created }}
+            </div>
+          </div>
+          <div class="flex items-center justify-between">
+            <div class="text-xs text-gray-600 truncate">
+              <!-- {{ plant.latestMessage().content }} -->
+            </div>
+            <div
+              *ngIf="plant.countMessages() > 1"
+              class="flex-none w-4 h-4 ml-4 text-[10px] font-semibold flex items-center justify-center text-white rounded-full bg-rose-500"
+            >
+              {{ plant.countMessages() }}
+            </div>
+          </div>
         </div>
-      </div>
+      </span>
     </div>
   </div>
 </div>

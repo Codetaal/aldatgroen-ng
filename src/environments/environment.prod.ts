@@ -1,3 +1,5 @@
 export const environment = {
-  production: true
+  production: true,
+  apiEndpoint: './assets/json/',
+  recurringAmount: 3,
 };
