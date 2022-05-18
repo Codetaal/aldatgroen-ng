@@ -2,7 +2,10 @@ import { EventService } from './../../../services/event.service';
 import { Component, OnInit } from '@angular/core';
 import { PlantService } from '../../../services/plant.service';
 import { ActivatedRoute } from '@angular/router';
-import { Plant } from 'src/app/interfaces/plant';
+import {
+  PlantResponseInterface,
+  PlantTransformInterface,
+} from 'src/app/interfaces/plant';
 import { Event } from 'src/app/interfaces/event';
 import { environment } from 'src/environments/environment';
 import * as dayjs from 'dayjs';
@@ -14,7 +17,7 @@ import * as dayjs from 'dayjs';
 })
 export class PlantDetailsComponent implements OnInit {
   id!: number;
-  plant!: Plant;
+  plant!: PlantResponseInterface;
   events!: Event[];
   today!: string;
 
@@ -41,37 +44,37 @@ export class PlantDetailsComponent implements OnInit {
   createRecurringEvents(): void {
     this.events = [];
 
-    this.plant.events.forEach((event, index) => {
-      const eventDate = dayjs(event.start_date)
-        .set('hour', 0)
-        .set('minute', 0)
-        .set('second', 0);
+    // this.plant.events.forEach((event, index) => {
+    //   const eventDate = dayjs(event.start_date)
+    //     .set('hour', 0)
+    //     .set('minute', 0)
+    //     .set('second', 0);
 
-      // Determine first date
-      const amount = Math.floor(
-        dayjs(this.today).diff(eventDate, 'day') / parseInt(event.repeat)
-      );
+    //   // Determine first date
+    //   const amount = Math.floor(
+    //     dayjs(this.today).diff(eventDate, 'day') / parseInt(event.repeat)
+    //   );
 
-      // Manipulate start_date if it takes place before today
-      // if (dayjs(eventDate).isBefore(dayjs(this.today))) {
-      //   event.start_date = dayjs(event.start_date).add(amount, 'day').format();
-      // }
+    //   // Manipulate start_date if it takes place before today
+    //   // if (dayjs(eventDate).isBefore(dayjs(this.today))) {
+    //   //   event.start_date = dayjs(event.start_date).add(amount, 'day').format();
+    //   // }
 
-      for (let n = 0; n <= amount; n++) {
-        const newEvent = { ...event };
+    //   for (let n = 0; n <= amount; n++) {
+    //     const newEvent = { ...event };
 
-        newEvent.start_date = dayjs(newEvent.start_date)
-          .add(parseInt(newEvent.repeat) * n, 'day')
-          .format();
-        newEvent.cloneRefIndex = index;
+    //     newEvent.start_date = dayjs(newEvent.start_date)
+    //       .add(parseInt(newEvent.repeat) * n, 'day')
+    //       .format();
+    //     newEvent.cloneRefIndex = index;
 
-        if (this.isToday(newEvent)) {
-          console.log(newEvent);
-        }
+    //     if (this.isToday(newEvent)) {
+    //       console.log(newEvent);
+    //     }
 
-        this.events.push(newEvent);
-      }
-    });
+    //     this.events.push(newEvent);
+    //   }
+    // });
   }
 
   sortEventsByStartDate() {

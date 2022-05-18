@@ -1,9 +1,11 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import { Event, EventPost } from '../interfaces/event';
 import { shareReplay } from 'rxjs/operators';
-import { Plant } from '../interfaces/plant';
+import {
+  PlantResponseInterface,
+  PlantsResponseInterface,
+} from '../interfaces/plant';
 
 @Injectable({
   providedIn: 'root',
@@ -13,15 +15,15 @@ export class PlantService {
 
   constructor(private httpClient: HttpClient) {}
 
-  public getPlant(id: number): Observable<Plant> {
+  public getPlant(id: number): Observable<PlantResponseInterface> {
     return this.httpClient
-      .get<Plant>(`${this.baseUrl}/${id}?fields=*.*`)
+      .get<PlantResponseInterface>(`${this.baseUrl}/${id}?fields=*.*`)
       .pipe(shareReplay());
   }
 
-  public getPlants(): Observable<Plant[]> {
+  public getPlants(): Observable<PlantsResponseInterface> {
     return this.httpClient
-      .get<Plant[]>(`${this.baseUrl}?fields=*.*`)
+      .get<PlantsResponseInterface>(`${this.baseUrl}?fields=*.*`)
       .pipe(shareReplay());
   }
 }

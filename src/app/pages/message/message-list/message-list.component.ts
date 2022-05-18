@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { Message } from 'src/app/interfaces/message';
+import { MessageResponse } from 'src/app/interfaces/message';
 import { MessageService } from 'src/app/services/message.service';
 
 @Component({
@@ -9,7 +9,7 @@ import { MessageService } from 'src/app/services/message.service';
   styleUrls: ['./message-list.component.scss'],
 })
 export class MessageListComponent implements OnInit {
-  messages!: Message[];
+  messages!: MessageResponse[];
 
   constructor(private messageService: MessageService, private router: Router) {}
 

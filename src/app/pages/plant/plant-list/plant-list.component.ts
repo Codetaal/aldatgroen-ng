@@ -1,8 +1,11 @@
-import { Plant } from 'src/app/interfaces/plant';
+import {
+  PlantsResponseInterface,
+  PlantTransformInterface,
+} from 'src/app/interfaces/plant';
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { PlantService } from '../../../services/plant.service';
-import { Message } from 'src/app/interfaces/message';
+import { MessageResponse, MessageTransform } from 'src/app/interfaces/message';
 
 @Component({
   selector: 'app-plant-list',
@@ -10,53 +13,60 @@ import { Message } from 'src/app/interfaces/message';
   styleUrls: ['./plant-list.component.scss'],
 })
 export class PlantListComponent implements OnInit {
-  plants!: Plant[];
-  // plants!: new MyPlant();
+  plantsResponse: PlantsResponseInterface = { data: [] };
+  plants: PlantTransformInterface[] = [];
 
   constructor(private plantService: PlantService, private router: Router) {}
 
   ngOnInit(): void {
-    this.plantService.getPlants().subscribe((response: any) => {
-      this.plants = response.data;
-      this.sortPlants(this.plants);
-      // console.log(this.plants);
-      // this.getLatestMessage(this.plants[0]);
-    });
+    this.plantService
+      .getPlants()
+      .subscribe((response: PlantsResponseInterface) => {
+        this.transform(response);
+      });
   }
 
-  sortPlants(plants: Plant[]): void {
-    const newPlants = plants;
+  transform(response: PlantsResponseInterface) {
+    response.data.forEach((plant) => {
+      const newPlant: PlantTransformInterface = {
+        sort: '',
+        name: plant.name,
+        secondary_name: plant.secondary_name,
 
-    newPlants.forEach((plant: Plant) => {
-      const newMessages = plant.messages;
+        messages: [],
 
-      if (newMessages.length) {
-        newMessages.sort(
-          (a, b) =>
-            new Date(a.date_created).getTime() -
-            new Date(b.date_created).getTime()
-        );
+        latestMessage: (): MessageResponse => {
+          return plant.messages[0];
+        },
+        countMessages: (): number => {
+          return plant.messages.length;
+        },
+      };
 
-        plant.sort = newMessages[0].date_created;
+      plant.messages.forEach((message) => {
+        const newMessage: MessageTransform = {
+          id: message.id,
+          content: message.content,
+        };
+        newPlant.messages.push(newMessage);
+      });
+
+      if (plant.messages.length) {
+        const newMessages = plant.messages;
+        newMessages.reverse();
+
+        newPlant.sort = newMessages[0].date_created;
       }
+
+      this.plants.push(newPlant);
     });
 
-    plants.sort(
+    this.plants.sort(
       (a, b) => new Date(b.sort).getTime() - new Date(a.sort).getTime()
     );
-  }
 
-  // getLatestMessage(plant: Plant): Message {
-  //   const messages = plant.messages;
-  //   if (messages.length) {
-  //     messages.sort(
-  //       (a, b) =>
-  //         new Date(a.date_created).getTime() -
-  //         new Date(b.date_created).getTime()
-  //     );
-  //   }
-  //   return messages[0];
-  // }
+    console.log(this.plants);
+  }
 
   routePlantDetails(id: number) {
     this.router.navigate(['plants', id]);

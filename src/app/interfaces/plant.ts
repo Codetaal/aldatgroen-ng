@@ -1,25 +1,30 @@
 import { Event } from 'src/app/interfaces/event';
-import { Message } from 'src/app/interfaces/message';
+import { MessageResponse, MessageTransform } from 'src/app/interfaces/message';
 
-export interface Plant {
+export interface PlantResponse {
   id: number;
   name: string;
   secondary_name: string;
   description: string;
   events: Event[];
-  messages: Message[];
-  sort: string;
-  // createdAt: string;
-  // updatesAt: string;
+  messages: MessageResponse[];
 }
 
-// export interface PlantResponse {
-//   id: number;
-//   name: string;
-//   secondary_name: string;
-//   description: string;
-//   events: Event[];
-//   messages: Message[];
-//   // createdAt: string;
-//   // updatesAt: string;
-// }
+export interface PlantResponseInterface {
+  data: PlantResponse;
+}
+
+export interface PlantsResponseInterface {
+  data: PlantResponse[];
+}
+
+export interface PlantTransformInterface {
+  name: string;
+  secondary_name: string;
+  sort: string;
+
+  messages: MessageTransform[];
+
+  latestMessage: () => MessageTransform;
+  countMessages: () => number;
+}
