@@ -23,7 +23,6 @@ export class PlantListComponent implements OnInit {
     this.plantService
       .getPlants()
       .subscribe((response: PlantsResponseInterface) => {
-        console.log(response);
         this.transform(response);
       });
   }
@@ -41,15 +40,13 @@ export class PlantListComponent implements OnInit {
           medium: '',
         },
         messages: [],
-        latestMessage: (): MessageResponse => {
-          return plant.messages[0];
+        latestMessage: (): any => {
+          return plant.messages.length ? plant.messages[0] : {};
         },
         countMessages: (): number => {
           return plant.messages.length;
         },
       };
-
-      console.log(plant.photo);
 
       if (plant.photo !== null) {
         newPlant.photo.small = `https://xzf89rcs.directus.app/assets/${plant.photo.id}?width=40&quality=80`;
@@ -83,8 +80,6 @@ export class PlantListComponent implements OnInit {
     this.plants.sort(
       (a, b) => new Date(b.sort).getTime() - new Date(a.sort).getTime()
     );
-
-    // console.log(this.plants);
   }
 
   routePlantDetails(id: number) {

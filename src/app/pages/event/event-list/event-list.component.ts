@@ -81,9 +81,7 @@ export class EventListComponent implements OnInit {
   submitForm() {
     this.eventService
       .createEvent(this.form.value)
-      .subscribe((response: any) => {
-        console.log(response);
-      });
+      .subscribe((response: any) => {});
   }
 
   postpone(event: Event) {
@@ -98,7 +96,6 @@ export class EventListComponent implements OnInit {
         'day'
       );
       if (dayjs(reminderDate).isBefore(dayjs())) {
-        console.log(event);
       }
     });
   }

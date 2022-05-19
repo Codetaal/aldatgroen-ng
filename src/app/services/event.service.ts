@@ -41,8 +41,6 @@ export class EventService {
 
     const body = JSON.stringify(postObj);
 
-    console.log('body', body);
-
     return this.httpClient
       .patch<Event[]>(`${this.baseUrl}/${event.id}`, body, {
         headers: headers,

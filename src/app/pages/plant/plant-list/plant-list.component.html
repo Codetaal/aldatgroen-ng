@@ -1,19 +1,20 @@
 <!-- <card name="test">hoi</card> -->
 
 <div class="flex flex-col h-screen bg-gradient-to-r from-rose-500 to-rose-400">
-  <div class="pb-0 pt-14">
+  <div class="relative z-0 pt-7">
     <div
-      class="w-2/3 px-8 text-2xl font-bold leading-8 tracking-wide text-white"
+      class="absolute w-full h-full top-[50%] -translate-y-2/4 bg-cover opacity-[2%] -z-10"
+      style="
+        background-image: url('https://storage.googleapis.com/pod_public/1300/95956.jpg');
+      "
+    ></div>
+    <div
+      class="flex items-center justify-between px-8 text-white text-opacity-50"
     >
-      Chat with your friends
-    </div>
-    <div class="flex pt-5 pl-8 overflow-hidden overflow-x-auto pb-7">
-      <div
-        class="flex items-center justify-center flex-shrink-0 mr-4 text-sm font-semibold border-2 border-dashed rounded-full text-rose-100 border-rose-300 w-11 h-11"
-      >
+      <div class="flex items-center">
         <svg
           xmlns="http://www.w3.org/2000/svg"
-          class="w-6 h-6"
+          class="w-5 h-5"
           fill="none"
           viewBox="0 0 24 24"
           stroke="currentColor"
@@ -22,7 +23,57 @@
           <path
             stroke-linecap="round"
             stroke-linejoin="round"
-            d="M12 6v6m0 0v6m0-6h6m-6 0H6"
+            d="M10 19l-7-7m0 0l7-7m-7 7h18"
+          />
+        </svg>
+        <div class="ml-3">Back</div>
+      </div>
+      <!-- <div class="">Search</div> -->
+    </div>
+    <div
+      class="flex items-center justify-between px-8 pb-5 text-2xl font-bold leading-8 tracking-wide pt-7"
+    >
+      <div class="w-2/3 text-white">Chat with your plant friends</div>
+      <div
+        class="flex items-center justify-center w-8 h-8 text-gray-600 bg-white rounded-full bg-opacity-90"
+      >
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          class="w-5 h-5"
+          fill="none"
+          viewBox="0 0 24 24"
+          stroke="currentColor"
+          stroke-width="2"
+        >
+          <path
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z"
+          />
+          <path
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"
+          />
+        </svg>
+      </div>
+    </div>
+    <div class="flex pl-8 overflow-hidden overflow-x-auto pb-7">
+      <div
+        class="flex items-center justify-center flex-shrink-0 mr-4 text-sm font-semibold text-white text-opacity-50 border-2 border-white border-dashed rounded-full border-opacity-40 w-11 h-11"
+      >
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          class="w-5 h-5"
+          fill="none"
+          viewBox="0 0 24 24"
+          stroke="currentColor"
+          stroke-width="2"
+        >
+          <path
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            d="M12 4v16m8-8H4"
           />
         </svg>
       </div>
@@ -30,16 +81,18 @@
         *ngFor="let plant of plants"
         class="flex items-center justify-center flex-shrink-0 mr-4"
       >
-        <div class="w-11 h-11">
+        <div
+          class="flex items-center justify-center bg-white rounded-full w-11 h-11 bg-opacity-40"
+        >
           <img
             *ngIf="plant.photo.small !== ''"
-            class="object-contain w-full h-full border-8 rounded-full bg-rose-200 border-rose-200"
+            class="w-2/3"
             src="{{ plant.photo.small }}"
             alt="{{ plant.secondary_name || plant.name }}"
           />
-          <div
+          <!-- <div
             *ngIf="plant.photo.small === ''"
-            class="flex items-center justify-center w-full h-full rounded-full bg-rose-200 text-rose-400"
+            class="flex items-center justify-center text-black text-opacity-80"
           >
             <svg
               xmlns="http://www.w3.org/2000/svg"
@@ -60,7 +113,7 @@
                 d="M15 13a3 3 0 11-6 0 3 3 0 016 0z"
               />
             </svg>
-          </div>
+          </div> -->
         </div>
       </div>
     </div>
@@ -71,42 +124,43 @@
       <span
         *ngFor="let plant of plants"
         (click)="routePlantDetails(plant.id)"
-        class="group flex flex-row items-center px-4 py-3 hover:bg-rose-50 active:bg-rose-50 rounded-[20px]"
+        class="flex flex-row items-center px-4 py-3 hover:bg-gray-100 active:bg-gray-100 rounded-[20px]"
       >
-        <div class="flex items-center justify-center flex-shrink-0">
-          <div class="relative w-14 h-14">
-            <img
-              *ngIf="plant.photo.small !== ''"
-              class="object-contain w-full h-full border-8 rounded-full bg-rose-50 border-rose-50"
-              src="{{ plant.photo.medium }}"
-              alt="{{ plant.secondary_name || plant.name }}"
-            />
-            <div
-              *ngIf="plant.photo.small === ''"
-              class="flex items-center justify-center w-full h-full rounded-full bg-rose-50 text-rose-300"
+        <div
+          class="relative flex items-center justify-center flex-shrink-0 bg-gray-100 rounded-full w-14 h-14 bg-opacity-90"
+        >
+          <img
+            *ngIf="plant.photo.small !== ''"
+            class="w-2/3"
+            src="{{ plant.photo.medium }}"
+            alt="{{ plant.secondary_name || plant.name }}"
+          />
+          <!-- <div
+            *ngIf="plant.photo.small === ''"
+            class="flex items-center justify-center text-gray-900 text-opacity-40"
+          >
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              class="w-6 h-6"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+              stroke-width="2"
             >
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                class="w-6 h-6"
-                fill="none"
-                viewBox="0 0 24 24"
-                stroke="currentColor"
-                stroke-width="2"
-              >
-                <path
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
-                  d="M3 9a2 2 0 012-2h.93a2 2 0 001.664-.89l.812-1.22A2 2 0 0110.07 4h3.86a2 2 0 011.664.89l.812 1.22A2 2 0 0018.07 7H19a2 2 0 012 2v9a2 2 0 01-2 2H5a2 2 0 01-2-2V9z"
-                />
-                <path
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
-                  d="M15 13a3 3 0 11-6 0 3 3 0 016 0z"
-                />
-              </svg>
-            </div>
-          </div>
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                d="M3 9a2 2 0 012-2h.93a2 2 0 001.664-.89l.812-1.22A2 2 0 0110.07 4h3.86a2 2 0 011.664.89l.812 1.22A2 2 0 0018.07 7H19a2 2 0 012 2v9a2 2 0 01-2 2H5a2 2 0 01-2-2V9z"
+              />
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                d="M15 13a3 3 0 11-6 0 3 3 0 016 0z"
+              />
+            </svg>
+          </div> -->
         </div>
+
         <div class="flex flex-col flex-1 min-w-0 ml-3">
           <div class="flex items-center justify-between">
             <div
@@ -121,7 +175,7 @@
           </div>
           <div class="flex items-center justify-between">
             <div class="text-xs text-gray-600 truncate">
-              <!-- {{ plant.latestMessage().content }} -->
+              {{ plant.latestMessage().content }}
             </div>
             <div
               *ngIf="plant.countMessages() > 1"
