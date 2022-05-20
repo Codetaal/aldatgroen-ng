@@ -60,58 +60,73 @@
       </div>
     </div>
   </div>
-  <div class="bg-white rounded-t-[30px] px-4 py-12 flex-grow">
-    <div *ngIf="plant" class="grid grid-cols-1 gap-3 py-3">
-      <!-- row -->
-      <ng-container *ngFor="let message of plant.messages">
-        <div class="flex flex-row items-end px-4">
-          <!-- TODO: tijd lijnt niet uit aan eind wanner tekst kort is -->
+  <div class="bg-white rounded-t-[30px] px-4 pt-8 pb-12 flex-grow">
+    <div *ngIf="plant" class="py-3">
+      <ng-container *ngFor="let group of plant.groupedMessages">
+        <div class="flex items-center justify-center mt-4">
           <div
-            class="relative flex items-center justify-center flex-shrink-0 w-8 h-8 bg-gray-100 rounded-full bg-opacity-90"
+            class="px-2 py-0.5 rounded-[30px] text-[10px] font-semibold text-gray-500 leading-4 bg-gray-50"
           >
-            <img
-              *ngIf="plant.photo.small !== ''"
-              class="w-2/3"
-              src="{{ plant.photo.medium }}"
-              alt="{{ plant.secondary_name || plant.name }}"
-            />
+            {{ group.day | date: "EEE, d MMM" }}
           </div>
-          <div class="ml-3">
+        </div>
+        <div class="">
+          <ng-container *ngFor="let message of group.messages; let i = index">
             <div
-              class="px-4 py-4 w-5/6 bg-gray-100 rounded-[30px] text-xs rounded-bl-none text-gray-600 leading-4"
+              [class.justify-end]="message.user_id === null"
+              [class.flex-row-reverse]="message.user_id === null"
+              [class.pt-0]="
+                i + 1 === group.messages?.length && group.messages?.length !== 1
+              "
+              class="flex flex-row items-end px-4 py-2"
             >
-              {{ message.content }}
+              <div
+                *ngIf="
+                  message.user_id !== null && i + 1 !== group.messages?.length
+                "
+                class="flex items-center justify-center flex-shrink-0 w-8 h-8"
+              ></div>
+              <div
+                *ngIf="
+                  message.user_id !== null && i + 1 === group.messages?.length
+                "
+                class="relative flex items-center justify-center flex-shrink-0 w-8 h-8 bg-gray-100 rounded-full bg-opacity-90"
+              >
+                <img
+                  *ngIf="plant.hasPhoto()"
+                  class="w-2/3"
+                  src="{{ plant.getPhoto(32, 80) }}"
+                  alt="{{ plant.getName() }}"
+                />
+              </div>
+              <div
+                [class.ml-3]="message.user_id !== null"
+                [class.mr-6]="message.user_id !== null"
+                [class.ml-6]="message.user_id === null"
+                class="flex-auto"
+              >
+                <!-- TODO: berichten zijn allemaal even lang en de user message is ook groter  -->
+                <div
+                  class="px-4 py-4 rounded-[24px] text-xs text-gray-600 leading-4"
+                  [class.bg-gray-100]="message.user_id !== null"
+                  [class.bg-rose-100]="message.user_id === null"
+                  [class.rounded-bl-none]="
+                    message.user_id !== null && i + 1 === group.messages?.length
+                  "
+                  [class.rounded-br-none]="
+                    message.user_id === null && i + 1 === group.messages?.length
+                  "
+                >
+                  {{ message.content }}
+                </div>
+              </div>
+              <time class="text-gray-400 text-[10px] self-center flex-shrink-0">
+                {{ message.published_date | date: "h:mm a" }}
+              </time>
             </div>
-          </div>
-          <time class="text-gray-400 text-[10px] self-center flex-shrink-0">
-            {{ message.date_created }}
-          </time>
+          </ng-container>
         </div>
       </ng-container>
-      <div class="flex items-end px-4">
-        <time class="text-gray-400 text-[10px] self-center flex-shrink-0">
-          00:00
-        </time>
-        <div class="flex justify-end mr-3">
-          <div
-            class="px-4 py-4 w-5/6 bg-rose-100 rounded-[30px] text-xs rounded-br-none text-gray-600 leading-4"
-          >
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec in
-            gravida sapien. Vestibulum ullamcorper egestas orci sed blandit.
-            Proin eget porta lacus.
-          </div>
-        </div>
-        <div
-          class="relative flex items-center justify-center flex-shrink-0 w-8 h-8 bg-gray-100 rounded-full bg-opacity-90"
-        >
-          <img
-            *ngIf="plant.photo.small !== ''"
-            class="w-2/3"
-            src="{{ plant.photo.medium }}"
-            alt="{{ plant.secondary_name || plant.name }}"
-          />
-        </div>
-      </div>
     </div>
   </div>
 </div>

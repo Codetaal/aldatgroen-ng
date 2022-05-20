@@ -37,58 +37,11 @@ export class PlantDetailsComponent implements OnInit {
       .getPlant(this.id)
       .subscribe((response: PlantResponseInterface) => {
         this.plant = this.plantService.transform(response.data);
+        // console.log('messages', this.plant.messages);
       });
   }
 
-  // transform(response: PlantResponseInterface) {
-  //   const plant = response.data;
-  //   const newPlant: PlantTransformInterface = {
-  //     sort: '',
-  //     id: plant.id,
-  //     name: plant.name,
-  //     secondary_name: plant.secondary_name,
-  //     date_created: plant.date_created,
-  //     photo: {
-  //       small: '',
-  //       medium: '',
-  //     },
-  //     messages: [],
-  //     latestMessage: (): any => {
-  //       return plant.messages.length ? plant.messages[0] : {};
-  //     },
-  //     countMessages: (): number => {
-  //       return plant.messages.length;
-  //     },
-  //   };
-
-  //   if (plant.photo !== null) {
-  //     newPlant.photo.small = `https://xzf89rcs.directus.app/assets/${plant.photo.id}?width=40&quality=80`;
-  //     newPlant.photo.medium = `https://xzf89rcs.directus.app/assets/${plant.photo.id}?width=56&quality=80`;
-  //   }
-
-  //   plant.messages.forEach((message) => {
-  //     const newMessage: MessageTransform = {
-  //       id: message.id,
-  //       content: message.content,
-  //       date_created: message.date_created,
-  //     };
-
-  //     newMessage.date_created = dayjs(newMessage.date_created).isSame(
-  //       dayjs('2022-05-18')
-  //     )
-  //       ? dayjs(newMessage.date_created).format('MM/DD/YYYY')
-  //       : dayjs(newMessage.date_created).format('h:mm a');
-
-  //     newPlant.messages.push(newMessage);
-  //   });
-
-  //   if (plant.messages.length) {
-  //     const newMessages = plant.messages;
-  //     newMessages.reverse();
-
-  //     newPlant.sort = newMessages[0].date_created;
-  //   }
-
-  //   this.plant = newPlant;
-  // }
+  ngAfterViewInit() {
+    // window.scrollTo(0, document.body.scrollHeight);
+  }
 }

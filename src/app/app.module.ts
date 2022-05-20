@@ -15,6 +15,7 @@ import { LoaderInterceptor } from './interceptors/loading.interceptor';
 import { LoaderComponent } from './components/loader/loader.component';
 import { MessageListComponent } from './pages/message/message-list/message-list.component';
 import { MessageDetailsComponent } from './pages/message/message-details/message-details.component';
+import { TimeagoModule } from 'ngx-timeago';
 
 @NgModule({
   declarations: [
@@ -34,6 +35,7 @@ import { MessageDetailsComponent } from './pages/message/message-details/message
     ReactiveFormsModule,
     AppRoutingModule,
     HttpClientModule,
+    TimeagoModule.forRoot(),
   ],
   providers: [
     {

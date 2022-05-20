@@ -1,9 +1,13 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import * as dayjs from 'dayjs';
+// import 'dayjs/locale/nl-nl'; // import locale
 import { Observable } from 'rxjs';
 import { shareReplay } from 'rxjs/operators';
-import { MessageTransform, MessageResponse } from '../interfaces/message';
+import {
+  MessageGroupsTransform,
+  MessageTransform,
+} from '../interfaces/message';
 import {
   PlantResponseInterface,
   PlantsResponseInterface,
@@ -32,16 +36,37 @@ export class PlantService {
   }
 
   public transform(plant: PlantResponse): any {
+    // TODO: time offset fixen
+    // plant.messages.forEach((message) => {
+    //   message.date_created = new Date(message.date_created).toISOString();
+    // });
+
+    plant.messages.sort((a, b): any => {
+      let dateA: string = a.published_date;
+      let dateB: string = b.published_date;
+
+      if (dateA === '') {
+        dateA = '2000-01-01';
+      }
+      if (dateB === '') {
+        dateB = '2000-01-01';
+      }
+
+      return new Date(dateB).getTime() - new Date(dateA).getTime();
+    });
+
+    plant.messages.reverse();
+
     const newResponse: PlantTransformInterface = {
       id: plant.id,
       name: plant.name,
       secondary_name: plant.secondary_name,
       date_created: plant.date_created,
       photo: {
-        small: '',
-        medium: '',
+        id: '',
       },
       messages: plant.messages,
+      groupedMessages: [],
       sort: '',
 
       getName: (): string => {
@@ -53,6 +78,9 @@ export class PlantService {
         } else {
           return '';
         }
+      },
+      hasPhoto: (): boolean => {
+        return plant.photo !== null ? true : false;
       },
       getLatestMessage: (): any => {
         // TODO: sort by date
@@ -66,14 +94,35 @@ export class PlantService {
       },
     };
 
-    if (plant.photo !== null) {
-      newResponse.photo.small = `https://xzf89rcs.directus.app/assets/${plant.photo.id}?width=40&quality=80`;
-      newResponse.photo.medium = `https://xzf89rcs.directus.app/assets/${plant.photo.id}?width=56&quality=80`;
+    if (newResponse.getMessageCount() > 0) {
+      newResponse.sort = newResponse.getLatestMessage().published_date;
     }
 
-    if (newResponse.getMessageCount() > 0) {
-      newResponse.sort = newResponse.getLatestMessage().date_created;
-    }
+    // Group messages
+    let messageGroup: MessageTransform[] = [];
+    plant.messages.forEach((message, index) => {
+      const nextMessage =
+        plant.messages[index < plant.messages.length - 1 ? index + 1 : index];
+
+      messageGroup.push(message);
+
+      if (
+        !dayjs(message.published_date, 'YYYY-MM-DD').isSame(
+          dayjs(nextMessage.published_date, 'YYYY-MM-DD'),
+          'day'
+        ) ||
+        index >= plant.messages.length - 1
+      ) {
+        const newGroupMessages: MessageGroupsTransform = {
+          day: message.published_date,
+          messages: messageGroup,
+        };
+        newResponse.groupedMessages.push(newGroupMessages);
+
+        messageGroup = [];
+      }
+    });
+
     return newResponse;
   }
 }

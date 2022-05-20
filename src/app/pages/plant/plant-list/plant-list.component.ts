@@ -31,13 +31,17 @@ export class PlantListComponent implements OnInit {
 
   sort(): void {
     this.plants.sort((a, b): any => {
-      if (a.sort === '') {
-        return 1;
-      } else if (new Date(a.sort).getTime() - new Date(b.sort).getTime()) {
-        return 1;
-      } else {
-        return -1;
+      let dateA: string = a.sort;
+      let dateB: string = b.sort;
+
+      if (dateA === '') {
+        dateA = '2000-01-01';
       }
+      if (dateB === '') {
+        dateB = '2000-01-01';
+      }
+
+      return new Date(dateB).getTime() - new Date(dateA).getTime();
     });
   }
 

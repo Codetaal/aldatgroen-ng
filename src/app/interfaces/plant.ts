@@ -1,5 +1,8 @@
-import { Event } from 'src/app/interfaces/event';
-import { MessageResponse, MessageTransform } from 'src/app/interfaces/message';
+import {
+  MessageResponse,
+  MessageTransform,
+  MessageGroupsTransform,
+} from 'src/app/interfaces/message';
 
 export interface PlantResponse {
   id: number;
@@ -10,7 +13,6 @@ export interface PlantResponse {
   };
   description: string;
   date_created: string;
-  // events: Event[];
   messages: MessageResponse[];
 }
 
@@ -27,12 +29,12 @@ export interface PlantTransformInterface {
   name: string;
   secondary_name: string;
   photo: {
-    small: string;
-    medium: string;
+    id: string;
   };
   date_created: string;
   sort: string;
   messages: MessageTransform[];
+  groupedMessages: MessageGroupsTransform[];
   // messages: Array<{
   //   id: number;
   //   content: string;
@@ -42,6 +44,7 @@ export interface PlantTransformInterface {
   getName: () => string;
   getPhoto: (width: number, quality: number) => string;
   getLatestMessage: () => MessageTransform;
+  hasPhoto: () => boolean;
   getMessageCount: () => number;
   hasNewMessage: () => boolean;
 }
