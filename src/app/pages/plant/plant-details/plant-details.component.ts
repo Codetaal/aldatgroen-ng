@@ -7,7 +7,7 @@ import {
   PlantTransformInterface,
 } from 'src/app/interfaces/plant';
 import { Event } from 'src/app/interfaces/event';
-import { environment } from 'src/environments/environment';
+import { MessageResponse, MessageTransform } from 'src/app/interfaces/message';
 import * as dayjs from 'dayjs';
 
 @Component({
@@ -17,8 +17,8 @@ import * as dayjs from 'dayjs';
 })
 export class PlantDetailsComponent implements OnInit {
   id!: number;
-  plant!: PlantResponseInterface;
-  events!: Event[];
+  plant!: PlantTransformInterface;
+  // events!: Event[];
   today!: string;
 
   constructor(
@@ -33,62 +33,62 @@ export class PlantDetailsComponent implements OnInit {
   ngOnInit(): void {
     this.id = this.route.snapshot.params['id'];
 
-    this.plantService.getPlant(this.id).subscribe((response: any) => {
-      this.plant = response.data;
-
-      this.createRecurringEvents();
-      this.sortEventsByStartDate();
-    });
+    this.plantService
+      .getPlant(this.id)
+      .subscribe((response: PlantResponseInterface) => {
+        this.plant = this.plantService.transform(response.data);
+      });
   }
 
-  createRecurringEvents(): void {
-    this.events = [];
+  // transform(response: PlantResponseInterface) {
+  //   const plant = response.data;
+  //   const newPlant: PlantTransformInterface = {
+  //     sort: '',
+  //     id: plant.id,
+  //     name: plant.name,
+  //     secondary_name: plant.secondary_name,
+  //     date_created: plant.date_created,
+  //     photo: {
+  //       small: '',
+  //       medium: '',
+  //     },
+  //     messages: [],
+  //     latestMessage: (): any => {
+  //       return plant.messages.length ? plant.messages[0] : {};
+  //     },
+  //     countMessages: (): number => {
+  //       return plant.messages.length;
+  //     },
+  //   };
 
-    // this.plant.events.forEach((event, index) => {
-    //   const eventDate = dayjs(event.start_date)
-    //     .set('hour', 0)
-    //     .set('minute', 0)
-    //     .set('second', 0);
+  //   if (plant.photo !== null) {
+  //     newPlant.photo.small = `https://xzf89rcs.directus.app/assets/${plant.photo.id}?width=40&quality=80`;
+  //     newPlant.photo.medium = `https://xzf89rcs.directus.app/assets/${plant.photo.id}?width=56&quality=80`;
+  //   }
 
-    //   // Determine first date
-    //   const amount = Math.floor(
-    //     dayjs(this.today).diff(eventDate, 'day') / parseInt(event.repeat)
-    //   );
+  //   plant.messages.forEach((message) => {
+  //     const newMessage: MessageTransform = {
+  //       id: message.id,
+  //       content: message.content,
+  //       date_created: message.date_created,
+  //     };
 
-    //   // Manipulate start_date if it takes place before today
-    //   // if (dayjs(eventDate).isBefore(dayjs(this.today))) {
-    //   //   event.start_date = dayjs(event.start_date).add(amount, 'day').format();
-    //   // }
+  //     newMessage.date_created = dayjs(newMessage.date_created).isSame(
+  //       dayjs('2022-05-18')
+  //     )
+  //       ? dayjs(newMessage.date_created).format('MM/DD/YYYY')
+  //       : dayjs(newMessage.date_created).format('h:mm a');
 
-    //   for (let n = 0; n <= amount; n++) {
-    //     const newEvent = { ...event };
+  //     newPlant.messages.push(newMessage);
+  //   });
 
-    //     newEvent.start_date = dayjs(newEvent.start_date)
-    //       .add(parseInt(newEvent.repeat) * n, 'day')
-    //       .format();
-    //     newEvent.cloneRefIndex = index;
+  //   if (plant.messages.length) {
+  //     const newMessages = plant.messages;
+  //     newMessages.reverse();
 
-    //     if (this.isToday(newEvent)) {
-    //       console.log(newEvent);
-    //     }
+  //     newPlant.sort = newMessages[0].date_created;
+  //   }
 
-    //     this.events.push(newEvent);
-    //   }
-    // });
-  }
-
-  sortEventsByStartDate() {
-    this.events.sort(
-      (a, b) =>
-        new Date(a.start_date).getTime() - new Date(b.start_date).getTime()
-    );
-  }
-
-  isToday(event: Event): boolean {
-    if (dayjs(this.today).isSame(dayjs(event.start_date), 'day')) {
-      return true;
-    }
-
-    return false;
-  }
+  //   this.plant = newPlant;
+  // }
 }

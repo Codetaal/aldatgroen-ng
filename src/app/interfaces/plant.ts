@@ -10,7 +10,7 @@ export interface PlantResponse {
   };
   description: string;
   date_created: string;
-  events: Event[];
+  // events: Event[];
   messages: MessageResponse[];
 }
 
@@ -32,9 +32,16 @@ export interface PlantTransformInterface {
   };
   date_created: string;
   sort: string;
-
   messages: MessageTransform[];
+  // messages: Array<{
+  //   id: number;
+  //   content: string;
+  //   date_created: string;
+  // }>;
 
-  latestMessage: () => MessageTransform;
-  countMessages: () => number;
+  getName: () => string;
+  getPhoto: (width: number, quality: number) => string;
+  getLatestMessage: () => MessageTransform;
+  getMessageCount: () => number;
+  hasNewMessage: () => boolean;
 }
