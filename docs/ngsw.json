@@ -1,6 +1,6 @@
 {
   "configVersion": 1,
-  "timestamp": 1653243225876,
+  "timestamp": 1653244411366,
   "index": "/aldatgroen-ng/index.html",
   "assetGroups": [
     {
@@ -13,11 +13,11 @@
       "urls": [
         "/aldatgroen-ng/favicon.ico",
         "/aldatgroen-ng/index.html",
-        "/aldatgroen-ng/main.b23fe8597cb6d323.js",
+        "/aldatgroen-ng/main.ba8d880dba69740f.js",
         "/aldatgroen-ng/manifest.webmanifest",
         "/aldatgroen-ng/polyfills.b3de0e448c94f345.js",
         "/aldatgroen-ng/runtime.6c0775f705a37742.js",
-        "/aldatgroen-ng/styles.b5658cea8a2b9173.css"
+        "/aldatgroen-ng/styles.298db9197a32ee95.css"
       ],
       "patterns": []
     },
@@ -36,7 +36,8 @@
         "/aldatgroen-ng/assets/icons/icon-384x384.png",
         "/aldatgroen-ng/assets/icons/icon-512x512.png",
         "/aldatgroen-ng/assets/icons/icon-72x72.png",
-        "/aldatgroen-ng/assets/icons/icon-96x96.png"
+        "/aldatgroen-ng/assets/icons/icon-96x96.png",
+        "/aldatgroen-ng/assets/images/monstera.jpeg"
       ],
       "patterns": []
     }
@@ -51,13 +52,14 @@
     "/aldatgroen-ng/assets/icons/icon-512x512.png": "559d9c4318b45a1f2b10596bbb4c960fe521dbcc",
     "/aldatgroen-ng/assets/icons/icon-72x72.png": "c457e56089a36952cd67156f9996bc4ce54a5ed9",
     "/aldatgroen-ng/assets/icons/icon-96x96.png": "3914125a4b445bf111c5627875fc190f560daa41",
+    "/aldatgroen-ng/assets/images/monstera.jpeg": "a4b4f61389a5808b8168ee704e765fb6333fcf78",
     "/aldatgroen-ng/favicon.ico": "22f6a4a3bcaafafb0254e0f2fa4ceb89e505e8b2",
-    "/aldatgroen-ng/index.html": "f13fe60dd9dd62b0e8dfea0afee20678d8a4ff2d",
-    "/aldatgroen-ng/main.b23fe8597cb6d323.js": "4b3f9c2f0b087446e980c0165216ef429f73bf70",
+    "/aldatgroen-ng/index.html": "8d17f536128e582efc266b7ddce2bb4fe31418b7",
+    "/aldatgroen-ng/main.ba8d880dba69740f.js": "bf47cd355881a98ed7ddea4584a803aa264e52a7",
     "/aldatgroen-ng/manifest.webmanifest": "6e66b42a2d50947c6717c004ed88b60edad60610",
     "/aldatgroen-ng/polyfills.b3de0e448c94f345.js": "bf44fda05f0780224759a63ee95e46729fd479de",
     "/aldatgroen-ng/runtime.6c0775f705a37742.js": "4ac77400cff117b5891f05ddfd35fedb55629ebe",
-    "/aldatgroen-ng/styles.b5658cea8a2b9173.css": "106b1f78f6651f0b0ec0d49d662ffbe7b85146d5"
+    "/aldatgroen-ng/styles.298db9197a32ee95.css": "0ae570eb30536b9357ee7536c933f16e2238becd"
   },
   "navigationUrls": [
     {
