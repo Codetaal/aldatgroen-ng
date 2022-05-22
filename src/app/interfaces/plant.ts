@@ -33,13 +33,8 @@ export interface PlantTransformInterface {
   };
   date_created: string;
   sort: string;
-  messages: MessageTransform[];
+  // messages: MessageTransform[];
   groupedMessages: MessageGroupsTransform[];
-  // messages: Array<{
-  //   id: number;
-  //   content: string;
-  //   date_created: string;
-  // }>;
 
   getName: () => string;
   getPhoto: (width: number, quality: number) => string;

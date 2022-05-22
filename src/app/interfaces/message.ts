@@ -6,6 +6,8 @@ export interface MessageResponse {
   published_date: string;
   date_created: string;
   date_updated: string;
+
+  // hasPhoto: () => boolean;
 }
 
 export interface MessageTransform {
@@ -14,9 +16,11 @@ export interface MessageTransform {
   content: string;
   date_created: string;
   published_date: string;
+
+  // hasPhoto: () => boolean;
 }
 
 export interface MessageGroupsTransform {
   day: string;
-  messages?: MessageTransform[];
+  messages: MessageTransform[];
 }

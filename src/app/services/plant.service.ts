@@ -36,11 +36,6 @@ export class PlantService {
   }
 
   public transform(plant: PlantResponse): any {
-    // TODO: time offset fixen
-    // plant.messages.forEach((message) => {
-    //   message.date_created = new Date(message.date_created).toISOString();
-    // });
-
     plant.messages.sort((a, b): any => {
       let dateA: string = a.published_date;
       let dateB: string = b.published_date;
@@ -65,7 +60,7 @@ export class PlantService {
       photo: {
         id: '',
       },
-      messages: plant.messages,
+      // messages: plant.messages,
       groupedMessages: [],
       sort: '',
 
@@ -104,7 +99,16 @@ export class PlantService {
       const nextMessage =
         plant.messages[index < plant.messages.length - 1 ? index + 1 : index];
 
-      messageGroup.push(message);
+      const newMessage: MessageTransform = {
+        id: message.id,
+        user_id: message.user_id,
+        content: message.content,
+        date_created: message.date_created,
+        published_date: message.published_date,
+        // hasPhoto: (): boolean => {},
+      };
+
+      messageGroup.push(newMessage);
 
       if (
         !dayjs(message.published_date, 'YYYY-MM-DD').isSame(

@@ -1,7 +1,7 @@
 import { EventService } from './../../../services/event.service';
 import { Component, OnInit } from '@angular/core';
 import { PlantService } from '../../../services/plant.service';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import {
   PlantResponseInterface,
   PlantTransformInterface,
@@ -24,6 +24,7 @@ export class PlantDetailsComponent implements OnInit {
   constructor(
     private plantService: PlantService,
     private eventService: EventService,
+    private router: Router,
     private route: ActivatedRoute
   ) {
     // this.today = '2022-05-18T00:00:00.000';
@@ -41,7 +42,7 @@ export class PlantDetailsComponent implements OnInit {
       });
   }
 
-  ngAfterViewInit() {
-    // window.scrollTo(0, document.body.scrollHeight);
+  routePlantList() {
+    this.router.navigate(['plants']);
   }
 }
